@@ -46,5 +46,9 @@ User Query
 - Detection and flagging of incorrect responses
 - "NEEDS REVIEW" tagging for bad outputs
 - Airtable-based logging and monitoring system
+- ## Tech Stack
+- n8n (workflow automation)
+- OpenAI API (LLM models)
+- Airtable (data storage and monitoring)
 
 
