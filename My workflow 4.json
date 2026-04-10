@@ -1,0 +1,487 @@
+{
+  "name": "My workflow 4",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1632,
+        -336
+      ],
+      "id": "39ae79f8-0b03-4105-ad1e-c58efbd2115e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a helpful support assistant. Answer clearly. If unsure, say “I don’t know"
+            },
+            {
+              "content": "={{$json[\"query\"]}}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -1264,
+        -320
+      ],
+      "id": "7594ef1a-3c9e-4455-83df-db36a90a637e",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "gFAWDO3M0e6uVlOk",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "=You are a strict AI evaluator.\n\nEvaluate the answer based on correctness, relevance, and completeness.\n\nBe VERY critical. Do NOT give high scores easily.\n\nReturn ONLY valid JSON in this format:\n{\n  \"score\": number between 0 and 1,\n  \"verdict\": \"good\" or \"bad\",\n  \"reason\": \"short explanation\"\n}\n\nRules:\n- If answer is partially correct → score < 0.7\n- If answer is wrong or irrelevant → verdict = \"bad\"\n- Only give score = 1 if answer is perfect\n- Be harsh and realistic"
+            },
+            {
+              "content": "=Question: {{$node[\"Edit Fields\"].json[\"query\"]}}\n\nAnswer: {{$node[\"Message a model\"].json[\"output\"][0][\"content\"][0][\"text\"]}}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -672,
+        -64
+      ],
+      "id": "cf2e42ad-0f1e-4aa6-b0a8-179ca0c357f3",
+      "name": "Message a model1",
+      "alwaysOutputData": false,
+      "credentials": {
+        "openAiApi": {
+          "id": "gFAWDO3M0e6uVlOk",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "apptLU8FS3V2g1gTA",
+          "mode": "list",
+          "cachedResultName": "LOGS",
+          "cachedResultUrl": "https://airtable.com/apptLU8FS3V2g1gTA"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbldaCsx2iR4YCrUU",
+          "mode": "list",
+          "cachedResultName": "Table 1",
+          "cachedResultUrl": "https://airtable.com/apptLU8FS3V2g1gTA/tbldaCsx2iR4YCrUU"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "correct": "=true",
+            "Query": "={{$node[\"Edit Fields\"].json[\"query\"]}}",
+            "Answer": "={{$node[\"Message a model\"].json[\"output\"][0][\"content\"][0][\"text\"]}}",
+            "confidence": "={{$json.score}}",
+            "category": "={{$node[\"Message a model2\"].json[\"output\"][0][\"content\"][0][\"text\"]}}",
+            "Latency": "={{ (new Date($node[\"Edit Fields1\"].json[\"end_time\"]).getTime() - new Date($node[\"Edit Fields\"].json[\"start_time\"]).getTime()) / 1000 }}",
+            "Review": "={{$json[\"review\"]}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Query",
+              "displayName": "Query",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Answer",
+              "displayName": "Answer",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "correct",
+              "displayName": "correct",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "confidence",
+              "displayName": "confidence",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Latency",
+              "displayName": "Latency",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Review",
+              "displayName": "Review",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        160,
+        -208
+      ],
+      "id": "fe98c8e7-294a-4e1e-a73d-76e95662c0fa",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "kWR3Yjru4uC1Xt02",
+          "name": "Airtable Personal Access Token account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"query\": \"what  is the capital of france\"\n  \"start_time\": {{$now}}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1456,
+        -304
+      ],
+      "id": "334f25cb-3012-4437-8fdc-34f2173185d9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a classifier.\n\nClassify the question into ONE category from:\n- Healthcare\n- Finance\n- Technology\n- Education\n- General\n\nReturn ONLY the category name. No explanation."
+            },
+            {
+              "content": "={{$node[\"Edit Fields\"].json[\"query\"]}}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.1,
+      "position": [
+        -848,
+        -336
+      ],
+      "id": "92130af4-1158-4c6c-9236-41fcd1f364eb",
+      "name": "Message a model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "gFAWDO3M0e6uVlOk",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a8fd5d00-3827-4311-b604-c684058bb0c2",
+              "name": "=end_time",
+              "value": "={{$now}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1040,
+        -16
+      ],
+      "id": "1abd3fe2-682f-4184-8fa3-7f299dfb20a8",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Add a new field called 'myNewField' to the JSON of the item\nconst raw = $json.output[0].content[0].text;\n\nconst parsed = JSON.parse(raw);\n\nreturn {\n  score: parsed.score,\n  verdict: parsed.verdict,\n  reason: parsed.reason\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        -192
+      ],
+      "id": "4f78c6f2-f465-44e7-9b1b-3bab4a6b8894",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1405e772-59c1-4a6a-9292-ba99579ceee5",
+              "leftValue": "={{$json[\"verdict\"]}}",
+              "rightValue": "good",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -160,
+        -272
+      ],
+      "id": "14261292-af18-4602-884b-76318cb78fab",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Add a new field called 'myNewField' to the JSON of the item\nreturn {\n  score: $json.score,\n  verdict: $json.verdict,\n  reason: $json.reason,\n  review: \"NEEDS REVIEW\",\n  correct: false\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        16
+      ],
+      "id": "09a8b0f4-f546-48d4-ae39-a4c32b7cbb2a",
+      "name": "Code in JavaScript1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model2": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Message a model2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "da697765-3be1-474d-8c23-4fa21cbb1320",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2181622b8d74a3c4592e1d33057ddcd085eda477cccd5b5e29c1d521794694ee"
+  },
+  "id": "Tg50Zz6K1A4Qc9S5",
+  "tags": []
+}
