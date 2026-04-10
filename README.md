@@ -57,5 +57,14 @@ User Query
 4. Configure required fields in Airtable (query, answer, category, confidence, etc.)
 5. Execute the workflow
 6. View results and monitoring data in Airtable
+## Future Improvements
+- Add retry mechanism with limit for failed responses
+- Improve evaluation prompts for more accurate scoring
+- Build advanced dashboard (Looker Studio / React)
+- Add cost tracking per API request
+- Implement feedback loop for continuous improvement
+
+## Author
+- Sushith.M
 
 
