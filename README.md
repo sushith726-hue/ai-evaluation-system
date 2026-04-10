@@ -50,5 +50,12 @@ User Query
 - n8n (workflow automation)
 - OpenAI API (LLM models)
 - Airtable (data storage and monitoring)
+## How to Use
+1. Import the workflow JSON file into n8n
+2. Connect your OpenAI API credentials
+3. Connect your Airtable account and base
+4. Configure required fields in Airtable (query, answer, category, confidence, etc.)
+5. Execute the workflow
+6. View results and monitoring data in Airtable
 
 
