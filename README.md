@@ -24,3 +24,17 @@ The system works as follows:
 - The system assigns a confidence score and a verdict (good or bad)
 - All results are stored in Airtable for tracking and analysis
 - Incorrect responses are flagged as "NEEDS REVIEW" for further inspection
+## Architecture
+The system follows a structured pipeline:
+
+User Query  
+→ Answer Model (LLM generates response)  
+→ Classifier (categorizes the query)  
+→ Evaluator Model (evaluates answer quality)  
+→ Code Node (parses evaluation output)  
+→ IF Node (decision logic)  
+→ Airtable (logging and monitoring)
+
+### Decision Logic
+- If verdict = "good" → stored as valid response  
+- If verdict = "bad" → flagged as "NEEDS REVIEW"
