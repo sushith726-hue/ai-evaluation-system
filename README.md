@@ -34,6 +34,9 @@ User Query
 → Code Node (parses evaluation output)  
 → IF Node (decision logic)  
 → Airtable (logging and monitoring)
+### Decision Logic
+- If verdict = "good" → stored as valid response  
+- If verdict = "bad" → flagged as "NEEDS REVIEW"
 ## Features
 - AI-generated responses using LLMs
 - Automated evaluation of responses (score + verdict)
@@ -44,6 +47,4 @@ User Query
 - "NEEDS REVIEW" tagging for bad outputs
 - Airtable-based logging and monitoring system
 
-### Decision Logic
-- If verdict = "good" → stored as valid response  
-- If verdict = "bad" → flagged as "NEEDS REVIEW"
+
