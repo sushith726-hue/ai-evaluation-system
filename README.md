@@ -14,3 +14,13 @@ There is a need for a system that can:
 - Measure their quality
 - Identify incorrect outputs
 - Enable monitoring and improvement
+## Solution
+To address this problem, I built an AI evaluation and monitoring system.
+
+The system works as follows:
+- A user provides a query
+- An AI model generates a response
+- Another AI model evaluates the response based on correctness, relevance, and clarity
+- The system assigns a confidence score and a verdict (good or bad)
+- All results are stored in Airtable for tracking and analysis
+- Incorrect responses are flagged as "NEEDS REVIEW" for further inspection
