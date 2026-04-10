@@ -34,6 +34,15 @@ User Query
 → Code Node (parses evaluation output)  
 → IF Node (decision logic)  
 → Airtable (logging and monitoring)
+## Features
+- AI-generated responses using LLMs
+- Automated evaluation of responses (score + verdict)
+- Query classification into categories (Technology, Healthcare, etc.)
+- Confidence scoring for each response
+- Latency tracking for performance monitoring
+- Detection and flagging of incorrect responses
+- "NEEDS REVIEW" tagging for bad outputs
+- Airtable-based logging and monitoring system
 
 ### Decision Logic
 - If verdict = "good" → stored as valid response  
